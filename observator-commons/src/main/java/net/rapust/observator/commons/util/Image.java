@@ -28,10 +28,8 @@ public class Image {
         return robot.createScreenCapture(rectangle);
     }
 
-    public byte[] getChanges(BufferedImage newImage, byte[] newImageBytes) throws IOException {
+    public byte[] getChanges(BufferedImage newImage, byte[] newImageBytes) {
         List<Integer> changes = new ArrayList<>();
-
-        int i = 0;
 
         for (int x = 0; x < newImage.getWidth(); x++) {
             for (int y = 0; y < newImage.getHeight(); y++) {
@@ -43,9 +41,8 @@ public class Image {
                     changes.add(x);
                     changes.add(y);
                     changes.add(newRgb);
-                    i++;
 
-                    if (i >= 25000) {
+                    if (changes.size() * 4 > newImageBytes.length) {
                         lastImage = newImage;
                         return null;
                     }
@@ -55,16 +52,12 @@ public class Image {
 
         lastImage = newImage;
 
-        if (changes.size() * 4 > newImageBytes.length) {
-            return null;
-        }
-
         int[] c = new int[changes.size()];
-        int j = 0;
+        int i = 0;
 
         for (Integer change : changes) {
-            c[j] = change;
-            j++;
+            c[i] = change;
+            i++;
         }
 
         return Bytes.convert(c);
