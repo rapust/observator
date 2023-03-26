@@ -3,6 +3,7 @@ package net.rapust.observator.protocol.buffer;
 import net.rapust.observator.commons.crypt.RSAKeyPair;
 import net.rapust.observator.commons.logger.MasterLogger;
 import net.rapust.observator.protocol.packet.Packet;
+import net.rapust.observator.protocol.packet.PacketManager;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -47,17 +48,9 @@ public class ByteContainer {
 
             Buffer buffer = toBuffer();
 
-            String packetName = buffer.readString();
+            int id = buffer.readInt();
 
-            Constructor<?> constructor = constructors.get(packetName);
-
-            if (constructor == null) {
-                Class<?> packetClass = Class.forName(packetName);
-                constructor = packetClass.getConstructor();
-                constructors.put(packetName, constructor);
-            }
-
-            Packet packet = (Packet) constructor.newInstance();
+            Packet packet = (Packet) PacketManager.getInstance().createPacketById(id);
 
             packet.read(buffer, keyPair);
 

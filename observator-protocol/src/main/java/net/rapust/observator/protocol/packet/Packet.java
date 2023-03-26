@@ -4,8 +4,6 @@ import net.rapust.observator.commons.crypt.RSAKeyPair;
 import net.rapust.observator.commons.crypt.RSAPublicKey;
 import net.rapust.observator.protocol.buffer.Buffer;
 
-import java.io.IOException;
-
 public interface Packet {
 
     default void write(Buffer buffer) {
@@ -20,8 +18,8 @@ public interface Packet {
 
     void read(Buffer buffer, RSAKeyPair keyPair);
 
-    default String hash() {
-        return this.getClass().getName();
+    default int getId() {
+        return PacketManager.getInstance().getIdByPacket(this);
     }
 
 }
