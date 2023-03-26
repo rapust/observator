@@ -1,0 +1,19 @@
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    /** Ломбок */
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    
+    /** Мои библиотеки */
+    implementation 'net.rapust.observator:observator-commons:1.0.0-SNAPSHOT'
+}

@@ -1,0 +1,7 @@
+rootProject.name = 'observator'
+
+include 'observator-protocol'
+include 'observator-commons'
+include 'observator-client'
+include 'observator-server'
+

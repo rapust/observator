@@ -1,0 +1,21 @@
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    /** Logger */
+    /** Change compileOnly to implementation if you want to enable log4j */
+    compileOnly 'org.apache.logging.log4j:log4j-api:2.14.1'
+    compileOnly 'org.apache.logging.log4j:log4j-core:2.14.1'
+
+    /** Ломбок */
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+}

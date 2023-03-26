@@ -1,0 +1,74 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.0.0' apply false
+}
+
+allprojects {
+    group = 'net.rapust.observator'
+    version = '1.0.0-SNAPSHOT'
+}
+
+configure(subprojects) {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.github.johnrengelman.shadow'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+
+        maven {
+            url = 'https://oss.sonatype.org/content/repositories/snapshots'
+        }
+
+        maven { url 'https://jitpack.io' }
+    }
+
+    tasks {
+        shadowJar {
+            exclude 'META-INF/DEPENDENCIES'
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/LICENSE.txt'
+            exclude 'META-INF/NOTICE'
+            exclude 'META-INF/NOTICE.txt'
+            exclude 'META-INF/maven/**'
+
+            getDestinationDirectory().set(new File("${projectDir}"))
+            archiveFileName.set("${project.name}.jar")
+        }
+
+        compileJava {
+            targetCompatibility = JavaVersion.VERSION_1_8
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            options.encoding = 'UTF-8'
+        }
+
+        compileTestJava {
+            targetCompatibility = JavaVersion.VERSION_1_8
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            options.encoding = 'UTF-8'
+        }
+
+        build {
+            dependsOn(shadowJar)
+        }
+
+        jar {
+            manifest {
+                attributes(
+                        'Main-Class': 'net.rapust.observator.Bootstrap'
+                )
+            }
+
+            finalizedBy(publishToMavenLocal)
+        }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+}
