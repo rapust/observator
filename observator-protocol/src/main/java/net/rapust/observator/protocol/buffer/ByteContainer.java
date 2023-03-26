@@ -48,7 +48,7 @@ public class ByteContainer {
 
             Buffer buffer = toBuffer();
 
-            int id = buffer.readInt();
+            int id = buffer.readBytes(1).get(0);
 
             Packet packet = (Packet) PacketManager.getInstance().createPacketById(id);
 

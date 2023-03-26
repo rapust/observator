@@ -41,11 +41,11 @@ public class Buffer {
         this.writeBytesUnsafe((byte) 9, (byte) -94, (byte) -66, (byte) 121);
     }
 
-    private void writeBytesUnsafe(Byte... bytes) {
+    public void writeBytesUnsafe(Byte... bytes) {
         this.bytes.addAll(Arrays.asList(bytes));
     }
 
-    private void writeBytesUnsafe(byte[] bytes) {
+    public void writeBytesUnsafe(byte[] bytes) {
         for (byte b : bytes) {
             this.bytes.add(b);
         }

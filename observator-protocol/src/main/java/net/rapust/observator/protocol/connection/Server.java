@@ -139,7 +139,7 @@ public abstract class Server {
 
         public void write(Packet packet, RSAPublicKey publicKey) throws IOException {
             Buffer buffer = Buffer.empty();
-            buffer.writeInt(packet.getId());
+            buffer.writeBytesUnsafe((byte) packet.getId());
 
             packet.write(buffer, publicKey);
             buffer.writeDescBytes();
