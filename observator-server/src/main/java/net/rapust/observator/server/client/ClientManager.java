@@ -17,7 +17,6 @@ public class ClientManager {
 
     public void addClient(ConnectedClient client) {
         clients.add(client);
-        updateList();
     }
 
     public ConnectedClient getClientByHandler(Server.ClientHandler handler) {
@@ -58,11 +57,6 @@ public class ClientManager {
 
     public void removeClient(ConnectedClient client) {
         clients.remove(client);
-        updateList();
-    }
-
-    private void updateList() {
-
     }
 
 }
