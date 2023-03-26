@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PacketRegistry {
 
     @Getter
-    private static final AtomicInteger lastId = new AtomicInteger(0);
+    private static final AtomicInteger lastId = new AtomicInteger(-129);
 
     private final int id;
     private final Class<?> clazz;
