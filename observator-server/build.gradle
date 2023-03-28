@@ -14,9 +14,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
-    /** YAML */
-    implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.3'
-
     /** Мои библиотеки */
     implementation 'net.rapust.observator:observator-commons:1.0.0-SNAPSHOT'
     implementation 'net.rapust.observator:observator-protocol:1.0.0-SNAPSHOT'

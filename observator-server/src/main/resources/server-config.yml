@@ -1,5 +1,0 @@
-name: "Сервер"
-
-port: 1337
-
-max-connections: 10

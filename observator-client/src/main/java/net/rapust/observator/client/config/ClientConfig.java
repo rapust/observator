@@ -3,21 +3,21 @@ package net.rapust.observator.client.config;
 import lombok.Getter;
 import lombok.Setter;
 import net.rapust.observator.commons.logger.MasterLogger;
-import org.simpleyaml.configuration.file.FileConfiguration;
-import org.simpleyaml.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.util.Properties;
 
 @Getter
 public class ClientConfig {
 
     private File file;
-    private FileConfiguration configuration;
+    private Properties properties;
 
     @Setter
-    private String name = "Клиент";
+    private String name = "Client";
     @Setter
-    private String password = "Пароль";
+    private String password = "qwerty123";
     @Setter
     private String ip = "127.0.0.1";
     @Setter
@@ -29,12 +29,14 @@ public class ClientConfig {
 
         try {
             file = config;
-            configuration = YamlConfiguration.loadConfiguration(config);
-            name = configuration.getString("name", "Клиент");
-            password = configuration.getString("password", "Пароль");
-            ip = configuration.getString("ip", "127.0.0.1");
-            port = configuration.getInt("port", 1337);
-            fps = configuration.getInt("fps", 20);
+            properties = new Properties();
+            properties.load(Files.newInputStream(file.toPath()));
+
+            name = properties.getProperty("name", "Client");
+            password = properties.getProperty("password", "qwerty123");
+            ip = properties.getProperty("ip", "127.0.0.1");
+            port = Integer.parseInt(properties.getProperty("port", "1337"));
+            fps = Integer.parseInt(properties.getProperty("fps", "20"));
         } catch (Exception e) {
             MasterLogger.error("Ошибка при загрузке конфига", e);
         }
@@ -48,17 +50,15 @@ public class ClientConfig {
                 file.createNewFile();
             }
 
-            if (configuration == null) {
-                configuration = new YamlConfiguration();
-            }
+            properties = new Properties();
 
-            configuration.set("name", name);
-            configuration.set("password", password);
-            configuration.set("ip", ip);
-            configuration.set("port", port);
-            configuration.set("fps", fps);
+            properties.setProperty("name", name);
+            properties.setProperty("password", password);
+            properties.setProperty("ip", ip);
+            properties.setProperty("port", String.valueOf(port));
+            properties.setProperty("fps", String.valueOf(fps));
 
-            configuration.save(file);
+            properties.save(Files.newOutputStream(file.toPath()), "Observator client config");
         } catch (Exception e) {
             MasterLogger.error("Ошибка при сохранении конфига", e);
         }

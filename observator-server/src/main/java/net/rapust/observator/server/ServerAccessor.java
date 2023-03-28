@@ -41,7 +41,7 @@ public class ServerAccessor implements Runnable {
         workingFolder = new File(preWorkingFolder, "server");
         workingFolder.mkdirs();
 
-        File configFile = new File(workingFolder, "server-config.yml");
+        File configFile = new File(workingFolder, "server.properties");
         Resources.saveResource(configFile);
 
         config = new ServerConfig(configFile);

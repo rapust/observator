@@ -42,7 +42,7 @@ public class ClientAccessor implements Runnable {
         workingFolder = new File(preWorkingFolder, "client");
         workingFolder.mkdirs();
 
-        File configFile = new File(workingFolder, "client-config.yml");
+        File configFile = new File(workingFolder, "client.properties");
         Resources.saveResource(configFile);
 
         config = new ClientConfig(configFile);

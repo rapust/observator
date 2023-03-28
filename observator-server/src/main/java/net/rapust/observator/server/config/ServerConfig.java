@@ -3,19 +3,19 @@ package net.rapust.observator.server.config;
 import lombok.Getter;
 import lombok.Setter;
 import net.rapust.observator.commons.logger.MasterLogger;
-import org.simpleyaml.configuration.file.FileConfiguration;
-import org.simpleyaml.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.util.Properties;
 
 @Getter
 public class ServerConfig {
 
     private File file;
-    private FileConfiguration configuration;
+    private Properties properties;
 
     @Setter
-    private String name = "Сервер";
+    private String name = "Server";
     @Setter
     private int port = 1337;
     @Setter
@@ -25,10 +25,13 @@ public class ServerConfig {
 
         try {
             file = config;
-            configuration = YamlConfiguration.loadConfiguration(config);
-            name = configuration.getString("name", "Сервер");
-            port = configuration.getInt("port", 1337);
-            maxConnections = configuration.getInt("max-connections", 10);
+            properties = new Properties();
+            properties.load(Files.newInputStream(file.toPath()));
+
+
+            name = properties.getProperty("name", "Server");
+            port = Integer.parseInt(properties.getProperty("port", "1337"));
+            maxConnections = Integer.parseInt(properties.getProperty("max-connections", "10"));
         } catch (Exception e) {
             MasterLogger.error("Ошибка при сохранении конфига", e);
         }
@@ -42,15 +45,13 @@ public class ServerConfig {
                 file.createNewFile();
             }
 
-            if (configuration == null) {
-                configuration = new YamlConfiguration();
-            }
+            properties = new Properties();
 
-            configuration.set("name", name);
-            configuration.set("port", port);
-            configuration.set("max-connections", maxConnections);
+            properties.setProperty("name", name);
+            properties.setProperty("port", String.valueOf(port));
+            properties.setProperty("max-connections", String.valueOf(maxConnections));
 
-            configuration.save(file);
+            properties.save(Files.newOutputStream(file.toPath()), "Observator server properties");
         } catch (Exception e) {
             MasterLogger.error("Ошибка при сохранении конфига", e);
         }
