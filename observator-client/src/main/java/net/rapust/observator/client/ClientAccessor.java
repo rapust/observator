@@ -46,7 +46,6 @@ public class ClientAccessor implements Runnable {
         Resources.saveResource(configFile);
 
         config = new ClientConfig(configFile);
-
         try {
             keyPair = RSAKeyPair.create(workingFolder);
         } catch (Exception e) {

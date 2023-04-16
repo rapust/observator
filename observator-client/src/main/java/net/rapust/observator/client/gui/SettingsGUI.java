@@ -20,7 +20,7 @@ public class SettingsGUI extends JFrame {
     private final JTextField nameField;
 
     private final JLabel passwordLabel;
-    private final JTextField passwordField;
+    private final JPasswordField passwordField;
 
     private final JLabel ipPortLabel;
     private final JTextField ipPortField;
@@ -40,7 +40,7 @@ public class SettingsGUI extends JFrame {
         nameField = new JTextField(config.getName(), 15);
 
         passwordLabel = new JLabel("Пароль клиента");
-        passwordField = new JTextField(config.getPassword(), 15);
+        passwordField = new JPasswordField(config.getPassword(), 15);
 
         ipPortLabel = new JLabel("Данные сервера");
         ipPortField = new JTextField(config.getIp() + ":" + config.getPort(), 15);
@@ -83,8 +83,20 @@ public class SettingsGUI extends JFrame {
                 return;
             }
 
+            int len = password.length();
+
             if (password.length() == 0) {
                 JOptionPane.showMessageDialog(gui, "Введите пароль клиента!", "Ошибка", JOptionPane.ERROR_MESSAGE, Tray.getIcon());
+                return;
+            }
+
+            if (len < 5 || len > 32) {
+                JOptionPane.showMessageDialog(gui, "Пароль должен быть от 5 до 32 символов!", "Ошибка", JOptionPane.ERROR_MESSAGE, Tray.getIcon());
+                return;
+            }
+
+            if (password.startsWith(" ") || password.endsWith(" ")) {
+                JOptionPane.showMessageDialog(gui, "Пароль не должен начинаться или заканчиваться на пробел!", "Ошибка", JOptionPane.ERROR_MESSAGE, Tray.getIcon());
                 return;
             }
 

@@ -22,7 +22,7 @@ public class ServerAccessor implements Runnable {
     @Getter
     private static ServerAccessor instance;
 
-    @Getter @Setter
+    @Setter
     private ServerImpl server;
 
     private final File workingFolder;

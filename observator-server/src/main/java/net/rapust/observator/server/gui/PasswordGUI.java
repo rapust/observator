@@ -19,7 +19,7 @@ public class PasswordGUI extends JFrame {
     private final ConnectedClient client;
 
     private final JLabel infoLabel;
-    private final JTextField passwordField;
+    private final JPasswordField passwordField;
 
     private final JButton sendButton;
 
@@ -32,7 +32,7 @@ public class PasswordGUI extends JFrame {
         this.client = client;
 
         infoLabel = new JLabel("Пароль для " + client.getName());
-        passwordField = new JTextField(15);
+        passwordField = new JPasswordField(15);
 
         sendButton = new JButton("Отправить");
         sendButton.addActionListener((click) -> {
