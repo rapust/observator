@@ -16,10 +16,10 @@ public class Crypt {
     }
 
     public static byte[] decrypt(byte[] cipher, Key key, String type) throws Exception {
-        Cipher decriptCipher = Cipher.getInstance(type);
-        decriptCipher.init(Cipher.DECRYPT_MODE, key);
+        Cipher decryptCipher = Cipher.getInstance(type);
+        decryptCipher.init(Cipher.DECRYPT_MODE, key);
 
-        return decriptCipher.doFinal(cipher);
+        return decryptCipher.doFinal(cipher);
     }
 
 }

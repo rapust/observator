@@ -5,7 +5,7 @@ import lombok.Setter;
 import net.rapust.observator.client.gui.ConfirmGUI;
 import net.rapust.observator.commons.crypt.AESKey;
 import net.rapust.observator.commons.util.Tray;
-import net.rapust.observator.protocol.connection.Client;
+import net.rapust.observator.protocol.connection.impl.Client;
 import net.rapust.observator.protocol.packet.Packet;
 
 import javax.swing.*;

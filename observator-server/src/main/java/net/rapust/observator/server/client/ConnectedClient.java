@@ -7,7 +7,7 @@ import net.rapust.observator.commons.crypt.AESKey;
 import net.rapust.observator.commons.crypt.RSAPublicKey;
 import net.rapust.observator.commons.logger.MasterLogger;
 import net.rapust.observator.commons.util.Image;
-import net.rapust.observator.protocol.connection.Server;
+import net.rapust.observator.protocol.connection.impl.Server;
 import net.rapust.observator.protocol.packet.Packet;
 import net.rapust.observator.protocol.packet.impl.HelloPacket;
 import net.rapust.observator.protocol.packet.impl.ScreenChangePacket;

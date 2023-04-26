@@ -3,7 +3,7 @@ package net.rapust.observator.server;
 import net.rapust.observator.commons.logger.MasterLogger;
 import net.rapust.observator.commons.util.Async;
 import net.rapust.observator.commons.util.Tray;
-import net.rapust.observator.protocol.connection.Server;
+import net.rapust.observator.protocol.connection.impl.Server;
 import net.rapust.observator.protocol.packet.Packet;
 import net.rapust.observator.server.client.ClientManager;
 import net.rapust.observator.server.client.ConnectedClient;

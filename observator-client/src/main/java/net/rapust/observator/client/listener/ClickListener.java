@@ -1,7 +1,8 @@
 package net.rapust.observator.client.listener;
 
 import net.rapust.observator.commons.logger.MasterLogger;
-import net.rapust.observator.protocol.connection.Client;
+import net.rapust.observator.protocol.connection.impl.Client;
+import net.rapust.observator.protocol.listener.Listen;
 import net.rapust.observator.protocol.listener.Listener;
 import net.rapust.observator.protocol.packet.impl.KeyboardClickPacket;
 import net.rapust.observator.protocol.packet.impl.MouseClickPacket;
@@ -14,6 +15,7 @@ public class ClickListener implements Listener {
 
     private static Robot robot;
 
+    @Listen
     public void onMouseClick(MouseClickPacket packet, Client client) {
         robot.mouseMove(packet.getX(), packet.getY());
 
@@ -26,10 +28,12 @@ public class ClickListener implements Listener {
         }
     }
 
+    @Listen
     public void onMouseMove(MouseMovePacket packet, Client client) {
         robot.mouseMove(packet.getX(), packet.getY());
     }
 
+    @Listen
     public void onKeyboardClick(KeyboardClickPacket packet, Client client) {
         int button = packet.getButton();
 

@@ -1,4 +1,4 @@
-package net.rapust.observator.protocol.connection;
+package net.rapust.observator.protocol.connection.impl;
 
 import lombok.Data;
 import net.rapust.observator.commons.crypt.RSAKeyPair;
@@ -8,6 +8,7 @@ import net.rapust.observator.commons.util.Async;
 import net.rapust.observator.commons.util.SystemInfo;
 import net.rapust.observator.protocol.buffer.Buffer;
 import net.rapust.observator.protocol.buffer.ByteContainer;
+import net.rapust.observator.protocol.connection.Connector;
 import net.rapust.observator.protocol.listener.Listener;
 import net.rapust.observator.protocol.listener.ListenerRegistry;
 import net.rapust.observator.protocol.packet.Packet;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public abstract class Client {
+public abstract class Client extends Connector {
 
     private final String name;
     private final String ip;
@@ -33,22 +34,13 @@ public abstract class Client {
     private DataOutputStream out;
     private DataInputStream in;
 
-    private RSAKeyPair keyPair = new RSAKeyPair();
     private RSAPublicKey publicKey = new RSAPublicKey();
-
-    private final List<ListenerRegistry> listeners = new ArrayList<>();
 
     public Client(String name, String ip, int port) {
         this.name = name;
         this.ip = ip;
         this.port = port;
     }
-
-    public abstract void onPacket(Packet packet);
-
-    public abstract void onConnect();
-
-    public abstract void onDisconnect();
 
     public void connect() throws Exception {
         MasterLogger.info("[КЛИЕНТ-" + name + "] Подключаемся к серверу " + ip + ":" + port + ".");
@@ -105,7 +97,7 @@ public abstract class Client {
                             MasterLogger.error("Packet is null!");
                         } else {
                             try {
-                                this.runListeners(packet);
+                                this.runListeners(packet, this);
                                 this.onPacket(packet);
                             } catch (Exception e) {
                                 MasterLogger.error(e);
@@ -120,30 +112,10 @@ public abstract class Client {
         });
     }
 
-    private void runListeners(Packet packet) {
-        Async.run(() -> {
-            for (ListenerRegistry registry : listeners) {
-                if (registry.getPacket().isInstance(packet)) {
-                    registry.invoke(packet, this);
-                }
-            }
-        });
-    }
+    public abstract void onPacket(Packet packet);
 
-    public void registerListeners(Listener... listeners) {
-        for (Listener l : listeners) {
-            Method[] methods = l.getClass().getMethods();
-            for (Method m : methods) {
-                Class<?>[] params = m.getParameterTypes();
-                if (params.length == 2 && params[1] == Client.class) {
-                    this.listeners.add(new ListenerRegistry(
-                            params[0],
-                            l,
-                            m
-                    ));
-                }
-            }
-        }
-    }
+    public abstract void onConnect();
+
+    public abstract void onDisconnect();
 
 }

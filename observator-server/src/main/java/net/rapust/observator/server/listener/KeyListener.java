@@ -2,7 +2,8 @@ package net.rapust.observator.server.listener;
 
 import net.rapust.observator.commons.crypt.AESKey;
 import net.rapust.observator.commons.crypt.RSAPublicKey;
-import net.rapust.observator.protocol.connection.Server;
+import net.rapust.observator.protocol.connection.impl.Server;
+import net.rapust.observator.protocol.listener.Listen;
 import net.rapust.observator.protocol.listener.Listener;
 import net.rapust.observator.protocol.packet.impl.AESKeyPacket;
 import net.rapust.observator.protocol.packet.impl.ErrorPacket;
@@ -15,6 +16,7 @@ public class KeyListener implements Listener {
     public static RSAPublicKey key;
     public static AESKey aesKey;
 
+    @Listen
     public void onKey(PublicKeyPacket packet, Server.ClientHandler clientHandler) throws Exception {
         key = new RSAPublicKey(packet.getKey());
         aesKey = new AESKey();

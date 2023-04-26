@@ -1,4 +1,4 @@
-package net.rapust.observator.protocol.connection;
+package net.rapust.observator.protocol.connection.impl;
 
 import lombok.Data;
 import net.rapust.observator.commons.crypt.RSAKeyPair;
@@ -8,6 +8,7 @@ import net.rapust.observator.commons.util.Async;
 import net.rapust.observator.commons.util.SystemInfo;
 import net.rapust.observator.protocol.buffer.Buffer;
 import net.rapust.observator.protocol.buffer.ByteContainer;
+import net.rapust.observator.protocol.connection.Connector;
 import net.rapust.observator.protocol.listener.Listener;
 import net.rapust.observator.protocol.listener.ListenerRegistry;
 import net.rapust.observator.protocol.packet.Packet;
@@ -24,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Data
-public abstract class Server {
+public abstract class Server extends Connector {
 
     private boolean running = false;
 
@@ -33,21 +34,12 @@ public abstract class Server {
 
     private ServerSocket serverSocket;
 
-    private RSAKeyPair keyPair = new RSAKeyPair();
-
     private HashMap<String, ClientHandler> clients = new HashMap<>();
-    private final List<ListenerRegistry> listeners = new ArrayList<>();
 
     public Server(String name, int port) {
         this.name = name;
         this.port = port;
     }
-
-    public abstract void onPacket(ClientHandler client, Packet packet);
-
-    public abstract void onConnect(ClientHandler client);
-
-    public abstract void onDisconnect(ClientHandler client);
 
     public void start() throws Exception {
         MasterLogger.info("[СЕРВЕР-" + name + "] Запускаем сервер на порту " + port + ".");
@@ -190,30 +182,10 @@ public abstract class Server {
         }
     }
 
-    private void runListeners(Packet packet, ClientHandler handler) {
-        Async.run(() -> {
-            for (ListenerRegistry registry : listeners) {
-                if (registry.getPacket().isInstance(packet)) {
-                    registry.invoke(packet, handler);
-                }
-            }
-        });
-    }
+    public abstract void onPacket(ClientHandler client, Packet packet);
 
-    public void registerListeners(Listener... listeners) {
-        for (Listener l : listeners) {
-            Method[] methods = l.getClass().getMethods();
-            for (Method m : methods) {
-                Class<?>[] params = m.getParameterTypes();
-                if (params.length == 2 && params[1] == ClientHandler.class) {
-                    this.listeners.add(new ListenerRegistry(
-                            params[0],
-                            l,
-                            m
-                    ));
-                }
-            }
-        }
-    }
+    public abstract void onConnect(ClientHandler client);
+
+    public abstract void onDisconnect(ClientHandler client);
 
 }

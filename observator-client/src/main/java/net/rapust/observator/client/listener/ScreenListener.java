@@ -4,7 +4,8 @@ import net.rapust.observator.client.ClientAccessor;
 import net.rapust.observator.commons.crypt.AESKey;
 import net.rapust.observator.commons.logger.MasterLogger;
 import net.rapust.observator.commons.util.Hash;
-import net.rapust.observator.protocol.connection.Client;
+import net.rapust.observator.protocol.connection.impl.Client;
+import net.rapust.observator.protocol.listener.Listen;
 import net.rapust.observator.protocol.listener.Listener;
 import net.rapust.observator.protocol.packet.impl.ErrorPacket;
 import net.rapust.observator.protocol.packet.impl.StartSharingPacket;
@@ -14,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 
 public class ScreenListener implements Listener {
 
+    @Listen
     public void onStart(StartSharingPacket packet, Client client) {
         AESKey key = ClientAccessor.getInstance().getClient().getAesKey();
 
@@ -35,6 +37,7 @@ public class ScreenListener implements Listener {
         ClientAccessor.getInstance().getMainGUI().update();
     }
 
+    @Listen
     public void onStop(StopSharingPacket packet, Client client) {
         ClientAccessor.getInstance().stopSending();
         ClientAccessor.getInstance().getMainGUI().setVisible(true);

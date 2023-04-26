@@ -1,6 +1,7 @@
 package net.rapust.observator.server.listener;
 
-import net.rapust.observator.protocol.connection.Server;
+import net.rapust.observator.protocol.connection.impl.Server;
+import net.rapust.observator.protocol.listener.Listen;
 import net.rapust.observator.protocol.listener.Listener;
 import net.rapust.observator.protocol.packet.impl.ErrorPacket;
 import net.rapust.observator.protocol.packet.impl.HelloPacket;
@@ -13,6 +14,7 @@ import java.io.IOException;
 
 public class HelloListener implements Listener {
 
+    @Listen
     public void onHello(HelloPacket packet, Server.ClientHandler clientHandler) throws IOException {
         ClientManager manager = ServerAccessor.getInstance().getClientManager();
         ConnectedClient client = manager.getClientByName(packet.getName());

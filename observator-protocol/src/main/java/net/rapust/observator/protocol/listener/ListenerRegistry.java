@@ -3,8 +3,8 @@ package net.rapust.observator.protocol.listener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.rapust.observator.commons.logger.MasterLogger;
-import net.rapust.observator.protocol.connection.Client;
-import net.rapust.observator.protocol.connection.Server;
+import net.rapust.observator.protocol.connection.impl.Client;
+import net.rapust.observator.protocol.connection.impl.Server;
 import net.rapust.observator.protocol.packet.Packet;
 
 import java.lang.reflect.Method;
@@ -17,17 +17,9 @@ public class ListenerRegistry {
     private final Listener listener;
     private final Method method;
 
-    public void invoke(Packet packet, Server.ClientHandler handler) {
+    public void invoke(Packet packet, Object target) {
         try {
-            method.invoke(listener, packet, handler);
-        } catch (Exception e) {
-            MasterLogger.error("Ошибка в листенере", e);
-        }
-    }
-
-    public void invoke(Packet packet, Client client) {
-        try {
-            method.invoke(listener, packet, client);
+            method.invoke(listener, packet, target);
         } catch (Exception e) {
             MasterLogger.error("Ошибка в листенере", e);
         }

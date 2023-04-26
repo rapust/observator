@@ -1,7 +1,7 @@
 package net.rapust.observator.server.client;
 
 import lombok.Getter;
-import net.rapust.observator.protocol.connection.Server;
+import net.rapust.observator.protocol.connection.impl.Server;
 
 import java.util.ArrayList;
 import java.util.List;
