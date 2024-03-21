@@ -10,11 +10,11 @@ repositories {
 }
 
 dependencies {
-    /** Ломбок */
+    /** Lombok */
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     
-    /** Мои библиотеки */
-    implementation 'net.rapust.observator:observator-commons:1.0.0-SNAPSHOT'
-    implementation 'net.rapust.observator:observator-protocol:1.0.0-SNAPSHOT'
+    /** My commons and protocol */
+    implementation(project(":observator-commons"))
+    implementation(project(":observator-protocol"))
 }

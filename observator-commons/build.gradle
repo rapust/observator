@@ -15,7 +15,7 @@ dependencies {
     compileOnly 'org.apache.logging.log4j:log4j-api:2.14.1'
     compileOnly 'org.apache.logging.log4j:log4j-core:2.14.1'
 
-    /** Ломбок */
+    /** Lombok */
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }

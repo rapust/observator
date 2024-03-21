@@ -4,7 +4,7 @@ plugins {
 
 allprojects {
     group = 'net.rapust.observator'
-    version = '1.0.1-RELEASE'
+    version = '1.0.0-SNAPSHOT'
 }
 
 configure(subprojects) {
@@ -33,7 +33,6 @@ configure(subprojects) {
             exclude 'META-INF/NOTICE.txt'
             exclude 'META-INF/maven/**'
 
-            getDestinationDirectory().set(new File("${projectDir}"))
             archiveFileName.set("${project.name}.jar")
         }
 

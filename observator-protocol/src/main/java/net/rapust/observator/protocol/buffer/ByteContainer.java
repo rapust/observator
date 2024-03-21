@@ -26,6 +26,7 @@ public class ByteContainer {
             return false;
         }
 
+        // magic numbers to identify the protocol
         return bytes.get(size - 1) == 121 && bytes.get(size - 2) == -66 && bytes.get(size - 3) == -94 && bytes.get(size - 4) == 9;
     }
 
